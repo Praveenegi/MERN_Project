@@ -46,11 +46,17 @@ export default function CreateListing() {
                 </div>
                 <div className= "flex items-center gap-2">
                     <input type= "number" id= "regularPrice" min= "1" max="10" required className= "p-3 border border-gray-300 rounded-lg"/>
+                    <div className="flex flex-col items-center">
                     <p>Regular price</p>
+                    <span className="text-xs">(INR / month)</span>
+                    </div>
                 </div>
                 <div className= "flex items-center gap-2">
                     <input type= "number" id= "discountPrice" min= "1" max="10" required className= "p-3 border border-gray-300 rounded-lg"/>
+                    <div className="flex flex-col items-center">
                     <p>Discounted price</p>
+                    <span className="text-xs">(INR / month)</span>
+                    </div>
                 </div>
             </div>
             </div>
