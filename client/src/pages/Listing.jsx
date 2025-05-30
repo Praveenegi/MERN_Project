@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide} from "swiper/react";
 import SwiperCore from "swiper";
+import { useSelector } from "react-redux";
 import { Navigation } from "swiper/modules";
 import "swiper/css/bundle";
 import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaShare } from "react-icons/fa";
+import Contact from "../components/Contact.jsx";
 
 
 export default function Listing() {
@@ -13,7 +15,9 @@ export default function Listing() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [copied, setCopied] = useState(false);
+    const [contact, setContact] = useState(false);
     const params = useParams();
+    const currentUser = useSelector((state) => state.user);
 
     useEffect(() => {
         const fetchListing = async () => {
@@ -36,7 +40,6 @@ export default function Listing() {
         };
         fetchListing();
     }, [params.listingId]);
-    console.log(loading);
 
   return ( <main>
     {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
@@ -94,7 +97,7 @@ export default function Listing() {
                     </li>
                     <li className= "flex items-center gap-1 whitespace-nowrap ">
                         <FaBath className= "text-lg"/>
-                        {listing.bathrooms > 1 ? `${listing.bathrooms} baths ` : `${listing.bedrooms} bath`}
+                        {listing.bathrooms > 1 ? `${listing.bathrooms} baths ` : `${listing.bathrooms} bath`}
                     </li>
                     <li className= "flex items-center gap-1 whitespace-nowrap ">
                         <FaParking className= "text-lg"/>
@@ -105,6 +108,12 @@ export default function Listing() {
                         {listing.furnished ? "Furnished" : "UnFurnished"}
                     </li>
                </ul>
+               {currentUser && listing.userRef !== currentUser._id && !contact && (
+               <button onClick= { ()=> setContact(true) } className= "bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3">
+                Contact landlord
+               </button>
+               )}
+               {contact && <Contact listing={listing}/>}
         </div>
     </div>
     )}
